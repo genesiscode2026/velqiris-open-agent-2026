@@ -6,7 +6,7 @@ VELQIRIS is an evidence-first agent for Track 02. The shortest verification path
 python3 tests/run_all_tests.py
 ```
 
-Expected: **24/24 PASS**.
+Expected: **30/30 PASS**.
 
 Then inspect:
 
@@ -16,4 +16,4 @@ Then inspect:
 4. `evidence/meterless-hmem-conformance.json` — official suite, 13/13.
 5. `PREEXISTING_TECHNOLOGY.md` — complete build-window disclosure.
 
-The four market rows are declared synthetic values executed by live Zetaris. They are intentionally deterministic for judging and do not represent production exchange feeds. No external model output, provider-cost claim, single-digit-latency claim, or digital signature is asserted.
+The four market rows and their venue telemetry are declared synthetic values joined and executed by live Zetaris. They are intentionally deterministic for judging and do not represent independently onboarded external sources or production exchange feeds. No external model output, provider-cost claim, latency benchmark, or digital signature is asserted.

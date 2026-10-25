@@ -6,7 +6,7 @@
 
 ## 00:25–01:10 — Zetaris
 
-“The official Zetaris local platform passes all nine checks. VELQIRIS logs in with a short-lived session and executes Lightning SQL through the UI, API, driver and Spark. This four-row scenario is deliberately synthetic and declared directly in SQL; it proves live platform execution without pretending to use production exchange feeds.”
+“The official Zetaris local platform passes all nine checks. VELQIRIS logs in with a short-lived session and executes Lightning SQL through the UI, API, driver and Spark. The live query joins `market_ticks` with `venue_telemetry` and returns four rows in an observed 8.395 seconds. Both logical relations are deliberately synthetic and declared directly in SQL; this proves live JOIN execution without pretending to use independently onboarded sources or production exchange feeds.”
 
 Show the live receipt: one connectivity row, four scenario rows, fresh request IDs, and client-side timing.
 
@@ -20,7 +20,7 @@ Show the live receipt: one connectivity row, four scenario rows, fresh request I
 
 ## 02:40–03:15 — Evidence and boundaries
 
-“The repository contains redaction-safe receipts, 24 passing Python tests, the 13-of-13 Meterless scorecard, and full pre-existing-code disclosure. SHA-256 values are integrity digests, not digital signatures. No production feed, provider-cost, external-model, or single-digit-latency claim is made.”
+“The repository contains redaction-safe receipts, 30 passing Python tests, the 13-of-13 Meterless scorecard, a standalone Audit Viewer, and full pre-existing-code disclosure. SHA-256 values are integrity digests, not digital signatures. No independent-source federation, production feed, provider-cost, external-model, or latency-benchmark claim is made.”
 
 ## 03:15–03:30 — Close
 
