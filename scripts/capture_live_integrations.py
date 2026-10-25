@@ -23,10 +23,27 @@ from agent.zetaris_client import ZetarisClient
 
 CONNECTIVITY_SQL = "SELECT 7 AS seven"
 MARKET_SCENARIO_SQL = """
-SELECT 'BINANCE' AS venue, 'BTC/USDC' AS pair, 67450.20 AS bid, 67451.10 AS ask, 142.5 AS volume, 12 AS latency_ms
-UNION ALL SELECT 'COINBASE', 'BTC/USDC', 67449.80, 67450.90, 98.2, 18
-UNION ALL SELECT 'OKX', 'BTC/USDC', 67450.50, 67451.40, 115.0, 15
-UNION ALL SELECT 'ANOMALY_DEX', 'BTC/USDC', 69120.00, 69150.00, 2.1, 120
+SELECT
+    market_ticks.venue,
+    market_ticks.pair,
+    market_ticks.bid,
+    market_ticks.ask,
+    market_ticks.volume,
+    venue_telemetry.latency_ms,
+    venue_telemetry.status
+FROM (
+    SELECT 'BINANCE' AS venue, 'BTC/USDC' AS pair, 67450.20 AS bid, 67451.10 AS ask, 142.5 AS volume
+    UNION ALL SELECT 'COINBASE', 'BTC/USDC', 67449.80, 67450.90, 98.2
+    UNION ALL SELECT 'OKX', 'BTC/USDC', 67450.50, 67451.40, 115.0
+    UNION ALL SELECT 'ANOMALY_DEX', 'BTC/USDC', 69120.00, 69150.00, 2.1
+) market_ticks
+INNER JOIN (
+    SELECT 'BINANCE' AS venue, 12 AS latency_ms, 'HEALTHY' AS status
+    UNION ALL SELECT 'COINBASE', 18, 'HEALTHY'
+    UNION ALL SELECT 'OKX', 15, 'HEALTHY'
+    UNION ALL SELECT 'ANOMALY_DEX', 120, 'DEGRADED'
+) venue_telemetry
+ON market_ticks.venue = venue_telemetry.venue
 """.strip()
 
 
@@ -100,10 +117,14 @@ def main() -> int:
         "endpoint": "http://localhost:3000",
         "connectivity_query": public_query_result(connectivity),
         "market_scenario": {
-            "data_classification": "DECLARED_SYNTHETIC_ROWS_EXECUTED_BY_LIVE_ZETARIS",
+            "data_classification": "DECLARED_SYNTHETIC_MULTI_RELATION_JOIN_EXECUTED_BY_LIVE_ZETARIS",
+            "logical_relations": ["market_ticks", "venue_telemetry"],
+            "join_key": "venue",
             "claim_boundary": (
-                "This proves live Zetaris SQL execution and VELQIRIS processing. "
-                "It does not claim connection to production exchange feeds."
+                "This proves live Zetaris SQL execution of a join across two declared "
+                "synthetic logical relations and subsequent VELQIRIS processing. It does "
+                "not claim that the relations are independently onboarded external data "
+                "sources or that they connect to production exchange feeds."
             ),
             "query_result": public_query_result(scenario),
             "velqiris_mad_consensus": consensus,
@@ -123,7 +144,8 @@ def main() -> int:
             {
                 "content": (
                     f"Live Zetaris request {scenario['request_id']} executed a declared synthetic "
-                    f"four-venue SQL scenario and returned {scenario['row_count']} rows."
+                    f"four-venue SQL scenario joining market_ticks with venue_telemetry "
+                    f"and returned {scenario['row_count']} rows."
                 ),
                 "source": f"zetaris:{scenario['request_id']}",
                 "type": "factual",
