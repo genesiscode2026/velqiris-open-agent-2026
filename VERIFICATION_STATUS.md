@@ -19,7 +19,7 @@
 | Demo video | Verified artifact | MP4, 1–4 minute requirement |
 | Pitch deck | Verified artifact | PPTX included in repository |
 | Audit Viewer | Verified artifact | Standalone `artifacts/index.html`; embedded snapshot plus same-origin refresh |
-| HackOS submission | Submitted; release update pending | Existing platform state is `Submitted 1/1`; final release fields must be saved and rechecked |
+| HackOS submission | Confirmed submitted | Final description, MP4 and PPTX saved successfully; reloaded platform state is `Submitted 1/1` |
 
 ## Release boundary
 
