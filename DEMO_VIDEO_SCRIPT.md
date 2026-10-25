@@ -1,51 +1,27 @@
-# Demo recording gate and script
+# Final demo script
 
-Do not record the final competition demo until live Zetaris, real Meterless engine usage, and the selected current Nemotron model have reproducible redacted receipts.
+## 00:00–00:25 — Problem
 
-## Required evidence before recording
+“Execution reviewers need evidence for why one market observation was accepted and another rejected. VELQIRIS turns that decision into an inspectable, reproducible chain.”
 
-- successful live Zetaris query against an identified non-secret source;
-- measured client-side request duration from the recorded run;
-- real Meterless engine present in the workflow, with an execution trace;
-- exact Nemotron model ID and successful non-simulated response;
-- no credentials, tokens or private endpoints visible;
-- the event-specific repository and its release artifacts;
-- truthful disclosure of pre-existing code.
+## 00:25–01:10 — Zetaris
 
-## 2–3 minute script template
+“The official Zetaris local platform passes all nine checks. VELQIRIS logs in with a short-lived session and executes Lightning SQL through the UI, API, driver and Spark. This four-row scenario is deliberately synthetic and declared directly in SQL; it proves live platform execution without pretending to use production exchange feeds.”
 
-### 00:00–00:25 — Problem
+Show the live receipt: one connectivity row, four scenario rows, fresh request IDs, and client-side timing.
 
-"Execution systems combine fragmented market observations, but operators need evidence for why one source was accepted and another rejected. VELQIRIS demonstrates a reproducible investigation path for that decision."
+## 01:10–01:55 — VELQIRIS decision
 
-### 00:25–01:05 — Architecture
+“VELQIRIS computes a robust MAD consensus. Three venues remain in the verified set. The anomalous venue is rejected because its deviation exceeds the ceiling. The post-filter consensus VWAP is 67,450.6642 and the verified spread is 0.09 basis points.”
 
-Show the repository and name each component precisely:
+## 01:55–02:40 — Meterless H-MEM
 
-- Zetaris: the recorded live query and returned rows;
-- Meterless: the actual engine used and the trace it produces;
-- the mathematical layer: MAD outlier isolation and consensus;
-- Meterless H-MEM: provenance capture, hybrid retrieval trace and trust-ledger receipt.
+“The observation and the derived decision are stored in the official Meterless H-MEM reference engine. The hybrid ranker retrieves both memories with explicit scores, and the local append-only ledger records two creates and two reads. The official conformance suite passes 13 out of 13.”
 
-Avoid adjectives such as "single-digit", "real-time", "cryptographically signed", or "under USD 0.05" unless the same recording displays valid supporting evidence.
+## 02:40–03:15 — Evidence and boundaries
 
-### 01:05–02:10 — Live workflow
+“The repository contains redaction-safe receipts, 24 passing Python tests, the 13-of-13 Meterless scorecard, and full pre-existing-code disclosure. SHA-256 values are integrity digests, not digital signatures. No production feed, provider-cost, external-model, or single-digit-latency claim is made.”
 
-Run the live command. Show:
+## 03:15–03:30 — Close
 
-1. execution mode `LIVE`;
-2. data-source mode `LIVE_ZETARIS`;
-3. redacted request ID and measured elapsed time;
-4. included and rejected records;
-5. model-response mode `LIVE_MODEL_API`;
-6. the Meterless trace.
-
-If any component falls back to simulation, stop and do not present the run as the final demo.
-
-### 02:10–02:40 — Evidence and limitation
-
-"The output is stored with a SHA-256 integrity digest. This detects payload changes; it is not a digital signature. The demo shows one validated path, and the repository documents its limitations and pre-existing components."
-
-### 02:40–03:00 — Close
-
-Summarize the user value without making unmeasured performance, security, or cost claims.
+“VELQIRIS makes a market-consensus decision explainable from query to memory trace to audit evidence.”

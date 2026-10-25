@@ -32,6 +32,7 @@ def main():
     print(f"    - URL: {data_val['details']['rest_url']}")
     print(f"    - Org ID: {data_val['details']['org_id']}")
     print(f"    - API Key Configured: {data_val['details']['api_key_configured']}")
+    print(f"    - Local Session Configured: {data_val['details']['local_session_configured']}")
 
     print(f"\n[*] Validating optional model adapter...")
     power_val = config.validate_power_layer()

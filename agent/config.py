@@ -18,6 +18,11 @@ class AgentConfig:
         self.zetaris_rest_url: str = source.get("ZETARIS_REST_URL", "http://localhost:3000").rstrip("/")
         self.zetaris_api_key: str = source.get("ZETARIS_API_KEY", "")
         self.zetaris_org_id: str = source.get("ZETARIS_ORG_ID", "")
+        # The official local Zetaris bundle uses a short-lived login session,
+        # not a user-created API key. Credentials stay in the environment and
+        # are never written to evidence records.
+        self.zetaris_admin_email: str = source.get("ZETARIS_ADMIN_EMAIL", "")
+        self.zetaris_admin_password: str = source.get("ZETARIS_ADMIN_PASSWORD", "")
 
         # Model layer. This generic OpenAI-compatible adapter is not itself a
         # Meterless engine integration.
@@ -47,7 +52,8 @@ class AgentConfig:
         has_url = bool(self.zetaris_rest_url)
         has_key = bool(self.zetaris_api_key)
         has_org = bool(self.zetaris_org_id)
-        ready = has_url and has_key and has_org
+        has_local_login = bool(self.zetaris_admin_email and self.zetaris_admin_password)
+        ready = has_url and ((has_key and has_org) or has_local_login)
         return {
             "layer": "Data (Zetaris)",
             "ready": ready,
@@ -55,6 +61,7 @@ class AgentConfig:
                 "rest_url": self.zetaris_rest_url,
                 "api_key_configured": has_key,
                 "org_id": self.zetaris_org_id,
+                "local_session_configured": has_local_login,
             }
         }
 
@@ -80,6 +87,7 @@ class AgentConfig:
             "zetaris_rest_url": self.zetaris_rest_url,
             "zetaris_org_id": self.zetaris_org_id,
             "zetaris_key_set": bool(self.zetaris_api_key),
+            "zetaris_local_session_set": bool(self.zetaris_admin_email and self.zetaris_admin_password),
             "model_base_url": self.model_base_url,
             "nemotron_model": self.nemotron_model,
             "model_key_set": bool(self.model_api_key),

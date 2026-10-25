@@ -1,124 +1,106 @@
 # VELQIRIS — The Agent That Can Explain Why
 
-Evidence-first agent prototype for the Open Agent Hackathon 2026, Track 02.
+Evidence-first market-consensus agent for the Open Agent Hackathon 2026, Track 02.
 
-## Verification status
+VELQIRIS executes a declared market-integrity scenario in Zetaris, applies Median Absolute Deviation (MAD) filtering, captures the observation and finding in Meterless H-MEM, retrieves them with an inspectable ranking trace, and emits redaction-safe evidence receipts.
 
-This release proves the local orchestration and the Meterless H-MEM integration. A live Zetaris receipt is still required before the project can truthfully claim a complete sponsor-integrated run.
+## Verified release status
 
-- **Verified locally:** 21 unit tests covering fixture ingestion, MAD filtering, tool schema, fail-closed behavior, SHA-256 integrity hashing, H-MEM provenance, hierarchical capture, hybrid retrieval, persistence, and tamper-evident trust-ledger verification.
-- **Meterless integrated:** a local-first implementation of the official H-MEM contract subset used by this workflow: canonical memories with lineage, `working`/`long_term` layers, hybrid retrieval with trace reasons, and an append-only hash-chained trust ledger.
-- **Implemented but not yet evidenced live:** the Zetaris REST adapter and an OpenAI-compatible model adapter.
-- **Not a digital signature:** the SHA-256 value is an integrity digest. There is no private-key signature or signer identity in the current prototype.
-- **Release gate:** do not describe the end-to-end run as live until a real Zetaris query produces a redacted receipt.
+- **Zetaris live:** the official local Docker bundle 2.4.3 passed its own verifier **9/9**. The verified route is `UI -> API -> driver -> Spark`.
+- **Live SQL proof:** `SELECT 7 AS seven` returned one row; a four-row market scenario also executed live in Zetaris and returned four rows. The scenario rows are declared synthetic. No production exchange-feed claim is made.
+- **Meterless live:** the vendored official H-MEM reference at upstream commit `1742dec56a66e58eef9dda2d2b865823758ca8cd` stored and retrieved both evidence memories, writing four append-only ledger events to local persistent storage.
+- **Meterless conformance:** the official H-MEM conformance suite passed **13/13**.
+- **Project tests:** **24/24** Python tests pass.
+- **Public repository:** <https://github.com/genesiscode2026/velqiris-open-agent-2026>
+- **Integrity terminology:** SHA-256 values are integrity digests, not digital signatures.
+- **Model boundary:** no external model was invoked in the live integration receipt. NVIDIA Nemotron is an optional in-kind prize integration and is not claimed here.
 
-The CLI distinguishes live execution from simulation. Live mode fails closed when credentials or an exact model ID are absent; fixture data is available only with `--dry-run`.
+The live receipt measures client-side durations of approximately 5.6 seconds for the connectivity query and 7.4 seconds for the four-row scenario on this first local Apple Silicon run. These are evidence timestamps, not a performance benchmark or a latency claim.
 
-## Intended workflow
+## Verified workflow
 
-1. Query multi-venue market rows through the Zetaris REST adapter.
-2. Compute a robust consensus and isolate price outliers with Median Absolute Deviation (MAD).
-3. Capture the query observation and derived finding in Meterless H-MEM.
-4. Retrieve context with multi-signal ranking and explicit trace metadata.
-5. Ask a configured model to explain the result using the retrieved evidence.
-6. Save an evidence record with a SHA-256 integrity digest and H-MEM trust-ledger head.
+1. Log in to the official local Zetaris bundle with a short-lived session.
+2. Execute Lightning SQL with a fresh `X-Request-ID`.
+3. Normalize returned rows without fabricating fallback data.
+4. Compute post-filter MAD consensus and reject the anomalous venue.
+5. Store the query observation and derived consensus in the official Meterless H-MEM reference engine.
+6. Retrieve both memories with hybrid ranking and preserve the trace.
+7. Persist the H-MEM state and append-only ledger locally.
+8. Publish redaction-safe receipts with SHA-256 digests; never persist credentials or session tokens.
 
-The included fixture uses synthetic market rows. It is suitable for local orchestration tests, not for claims about live venues, measured Zetaris latency, Meterless usage, model quality, or provider cost.
+## Evidence
 
-## Run the verified offline simulation
+- [`evidence/zetaris-platform-verification.json`](evidence/zetaris-platform-verification.json): official Zetaris verifier, 9/9.
+- [`evidence/zetaris-live-receipt.json`](evidence/zetaris-live-receipt.json): live query IDs, rows, timings, result hashes, and claim boundary.
+- [`evidence/meterless-hmem-live-receipt.json`](evidence/meterless-hmem-live-receipt.json): official H-MEM runtime, retrieval scores, ledger count, and ledger digest.
+- [`evidence/meterless-hmem-conformance.json`](evidence/meterless-hmem-conformance.json): official suite, 13/13.
+- [`evidence/meterless-hmem-runtime/`](evidence/meterless-hmem-runtime/): persisted state and append-only ledger.
+- [`evidence/offline-evidence.json`](evidence/offline-evidence.json): explicitly labelled offline regression artifact.
+
+## Reproduce the public checks
 
 ```bash
 python3 tests/run_all_tests.py
-python3 agent/cli.py --dry-run
+python3 agent/cli.py --dry-run --output evidence/offline-evidence.json
+npm ci --prefix vendor/meterless-hmem-reference
+HMEM_IMPL="$PWD/vendor/meterless-hmem-reference/src/index.ts" \
+  vendor/meterless-hmem-reference/node_modules/.bin/tsx \
+  vendor/meterless-hmem-conformance/runner.ts
 ```
 
-Expected behavior:
+Expected results: Python **24/24**, Meterless H-MEM **13/13**.
 
-- test output reports 21 passing local tests;
-- CLI output is visibly labelled `OFFLINE SIMULATION`;
-- no external model call is claimed;
-- estimated provider cost remains zero;
-- the evidence record labels the source and model modes.
-
-## Configure a live validation run
-
-Use only credentials and identifiers issued for the current event environment:
+Reproducing the live Zetaris receipt additionally requires the official event bundle, Docker Desktop, the registry entitlement, and a local `.env` supplied by Zetaris:
 
 ```bash
-export ZETARIS_REST_URL="https://your-current-zetaris-endpoint"
-export ZETARIS_API_KEY="..."
-export ZETARIS_ORG_ID="..."
-export MODEL_BASE_URL="https://your-current-model-endpoint/v1"
-export MODEL_API_KEY="..."
-export NEMOTRON_MODEL="exact-current-model-id"
+python3 scripts/capture_live_integrations.py \
+  --zetaris-env /path/to/zetaris-platform/.env \
+  --receipt evidence/zetaris-live-receipt.json \
+  --meterless-input evidence/meterless-hmem-input.json
 
-python3 agent/cli.py --query "SELECT * FROM your_verified_source"
+vendor/meterless-hmem-reference/node_modules/.bin/tsx \
+  scripts/meterless_official_bridge.ts \
+  evidence/meterless-hmem-input.json \
+  evidence/meterless-hmem-live-receipt.json \
+  evidence/meterless-hmem-runtime
 ```
 
-Do not publish live-integration claims until the run produces redacted evidence showing the source, timestamp, request/result status, measured client-side elapsed time, exact model ID, and non-simulated execution modes.
+## Sponsor integration
 
-## Sponsor-integration matrix
-
-| Component | Current code | Evidence required before claiming integration |
+| Sponsor | Integration | Verified evidence |
 |---|---|---|
-| Zetaris | REST request adapter with bearer token, organization ID and unique request ID | Successful live query against an identified source, redacted receipt/result, and measured timing |
-| Meterless | H-MEM core profile implemented and exercised locally | Evidence record contains engine name, official spec URL, stored/retrieved IDs, retrieval strategy, ledger-entry count, and ledger-head SHA-256 |
-| NVIDIA Nemotron | Generic OpenAI-compatible chat adapter | Successful call using an exact currently available Nemotron model ID and a redacted response receipt |
-| Cursor | Development-tool references only | Development evidence if Cursor use is claimed |
+| Zetaris | Official local bundle; session login; Lightning SQL through UI, API, driver and Spark; fresh request IDs | 9/9 verifier plus two successful live queries |
+| Meterless | Official H-MEM reference engine, local persistence, hybrid retrieval and append-only trust ledger | 13/13 conformance plus runtime receipt and ledger |
 
-## Evidence terminology
+The project-local `MeterlessGovernor` is only local prompt and cost arithmetic. It is not provider billing telemetry and is not used as proof of Meterless integration.
 
-- **Integrity hash:** SHA-256 digest used to detect a changed payload.
-- **Digital signature:** requires a private key and verifiable signer identity; not implemented here.
-- **H-MEM trust-ledger hash:** a hash-chain integrity control for local memory mutations; it is not a signature.
-- **Local cost estimate:** project-local arithmetic, not Meterless or model-provider billing telemetry.
-- **Offline test:** verifies code behavior against fixtures/mocks; does not prove external integration.
+## Offline mode and fail-closed behavior
+
+Fixture data is available only with `--dry-run`, is labelled `OFFLINE_SIMULATION`, and never proves external integration. Live Zetaris mode accepts either:
+
+- a bearer token plus organization ID; or
+- the official local bundle's administrator session credentials.
+
+If neither credential mode is configured, live execution fails closed and returns no synthetic rows.
 
 ## Repository structure
 
 ```text
-open_agent_2026/
-├── agent/
-│   ├── cli.py
-│   ├── config.py
-│   ├── evidence_explainer.py
-│   ├── llm.py
-│   ├── meterless_governor.py
-│   ├── meterless_hmem.py
-│   └── zetaris_client.py
-├── tests/
-├── DEMO_VIDEO_SCRIPT.md
-├── PREEXISTING_TECHNOLOGY.md
-├── VERIFICATION_STATUS.md
-└── LICENSE
+├── agent/                          Python workflow and adapters
+├── scripts/                        Live receipt and Meterless bridge tools
+├── vendor/
+│   ├── meterless-hmem-reference/  Official Apache-2.0 reference engine
+│   └── meterless-hmem-conformance/ Official conformance harness and vectors
+├── tests/                          24 deterministic regression tests
+├── evidence/                       Live and offline redaction-safe receipts
+├── artifacts/                      Final MP4 and PPTX
+└── PREEXISTING_TECHNOLOGY.md       Build-window disclosure
 ```
 
-## Competition disclosure
+## Pre-existing technology disclosure
 
-The base prototype files predate the event page's current build-window start of 22 October 2026. They are disclosed as pre-existing product code. The H-MEM integration, evidence hardening, fail-closed release gates and expanded tests were completed during the current build window.
-
-## Submission artifacts
-
-- [Narrated demo — 3:31 MP4](artifacts/VELQIRIS_Open_Agent_2026_Demo.mp4)
-- [Pitch deck — PPTX](artifacts/VELQIRIS_Open_Agent_2026_Pitch_Deck.pptx)
-- [Generated offline evidence record](evidence/offline-evidence.json)
-- [Reproducible release evidence](RELEASE_EVIDENCE.md)
-- [Pre-existing technology disclosure](PREEXISTING_TECHNOLOGY.md)
-
-The demo and deck preserve the same release gate as the code: Meterless H-MEM is exercised locally; the Zetaris fixture is explicitly offline until a live receipt is available.
-
-## Meterless implementation profile
-
-H-MEM is an implementation specification, not a hosted service dependency. This project implements the operational subset used by VELQIRIS directly in Python, following the [official Meterless H-MEM specification](https://github.com/Meterless/Meterless/tree/main/engines/hmem):
-
-- canonical memory records with `source`, confidence, domains, entities, relationships and `derivedFrom` lineage;
-- hierarchical `short_term`, `working`, and `long_term` layers;
-- hybrid retrieval using keyword, tag, entity, domain, layer, recency and confidence signals;
-- retrieval trace metadata with the reason and score for every selected memory;
-- append-only, SHA-256 hash-chained trust ledger with complete-chain verification.
-
-Dreaming, sleep-cycle and conflict-resolution services are intentionally outside this hackathon profile and are not claimed.
+The VELQIRIS brand, initial Python adapters, fixture workflow, MAD logic, project-local governor and original tests predate the official 22 October 2026 build-window start. The fail-closed hardening, local-session Zetaris adapter, live Zetaris execution, official Meterless H-MEM bridge, conformance evidence, receipts, expanded 24-test suite, documentation and release artifacts were completed during the current build window. See [`PREEXISTING_TECHNOLOGY.md`](PREEXISTING_TECHNOLOGY.md).
 
 ## License
 
-Apache License 2.0. See `LICENSE`.
+Project code: Apache License 2.0. Vendored Meterless H-MEM files retain their upstream Apache-2.0 license and provenance in `vendor/meterless-hmem-reference/UPSTREAM.md`.

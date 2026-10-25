@@ -1,41 +1,33 @@
 # Pre-existing technology disclosure
 
 **Submission:** VELQIRIS — The Agent That Can Explain Why  
-**Current official build window:** 22 October 2026, 00:00 UTC to 27 October 2026, 23:45 UTC
+**Official build window:** 22 October 2026, 00:00 UTC to 27 October 2026, 23:45 UTC
 
-## Disclosure
+## Pre-existing material
 
-The base files in `competition_submissions/open_agent_2026/` have local modification timestamps from 15 October 2026, before the current official build window. They must therefore be treated as pre-existing product code unless stronger provenance proves otherwise.
+- VELQIRIS brand and broader product concept.
+- Initial Python adapters and fixture workflow.
+- Initial MAD consensus logic.
+- Project-local prompt and cost governor.
+- Original tests and draft documentation.
 
-Pre-existing material includes:
+## Work completed during the current build window
 
-- the VELQIRIS brand and broader product concepts;
-- the initial Python adapters and local fixture workflow;
-- the initial MAD consensus logic;
-- the original local prompt/cost governor;
-- the original tests and draft documentation.
+- Explicit separation of live execution from fixture simulation.
+- Fail-closed live behavior with no silent synthetic fallback.
+- Correct post-filter spread calculation and SHA-256 terminology.
+- Official local Zetaris session authentication and query path.
+- Live Zetaris Docker deployment, 9/9 official verification, and two redaction-safe query receipts.
+- Official Meterless H-MEM reference bridge with upstream provenance and Apache-2.0 license.
+- Meterless official conformance result, 13/13.
+- Persistent H-MEM state, retrieval trace, and append-only ledger evidence.
+- Expanded regression suite, now 24/24.
+- Public event-specific repository, final deck, current demo, and release documentation.
 
-## Work completed during the current window
+## Sponsor disclosure
 
-Record only changes with verifiable provenance dated within the official build window. The reviewed hardening patch dated 25 October 2026 includes:
+- **Zetaris:** verified live against the official event bundle. The submitted market scenario uses declared synthetic SQL rows, not production feeds.
+- **Meterless:** verified through the official H-MEM reference engine. The older project-local governor is not presented as Meterless billing telemetry.
+- **NVIDIA Nemotron:** optional prize technology; no live model output is claimed.
 
-- explicit separation of live mode and fixture simulation;
-- fail-closed behavior when live credentials are missing;
-- removal of simulated Nemotron and Meterless claims;
-- correction of post-filter spread calculation;
-- accurate SHA-256 integrity terminology;
-- expanded local regression coverage from 11 to 21 tests;
-- corrected competition documentation.
-- Meterless H-MEM core implementation with canonical provenance records, hierarchical layers, hybrid retrieval trace, local persistence, and a hash-chained trust ledger;
-- five dedicated H-MEM contract tests and end-to-end H-MEM receipt assertions, bringing the suite to 21 passing tests.
-
-If this patch is not adopted into the submission repository with reliable commit provenance, do not claim it as submitted work.
-
-## Sponsor-work disclosure
-
-- **Zetaris:** request adapter exists; live execution evidence is pending.
-- **Meterless:** the new H-MEM integration profile is build-window work. The older `MeterlessGovernor` remains project-local cost arithmetic and is not presented as provider billing telemetry.
-- **External model adapter:** a generic OpenAI-compatible adapter exists; no live provider output is claimed in this release.
-- **Cursor:** do not claim use unless supported by development records.
-
-This disclosure should be included in, or linked from, the final submission description and repository README.
+Vendored Meterless files remain attributed to their upstream authors and retain Apache-2.0 licensing. See `vendor/meterless-hmem-reference/UPSTREAM.md`.

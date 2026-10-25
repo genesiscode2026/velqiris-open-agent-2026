@@ -1,60 +1,43 @@
-# Truthful slide-deck outline
+# Final slide-deck content
 
-This outline is safe only after replacing each `PENDING` item with verified evidence.
+## Slide 1 — VELQIRIS
 
-## Slide 1 — Problem and users
+The Agent That Can Explain Why. Evidence-first market consensus for execution reviewers.
 
-- Problem: evidence gaps in multi-source execution decisions.
-- Users: routing engineers, market-risk analysts, and audit teams.
-- Avoid unsupported regulatory or catastrophic-loss claims.
+## Slide 2 — The problem
 
-## Slide 2 — Prototype solution
+Multi-source decisions become difficult to audit when the query, filter, memory context and final rationale are disconnected.
 
-- Query records through a data adapter.
-- Compute a MAD-based consensus.
-- Generate an evidence-grounded explanation.
-- Attach a SHA-256 integrity digest.
+## Slide 3 — Verified workflow
 
-## Slide 3 — Workflow
+Zetaris live SQL -> MAD consensus -> official Meterless H-MEM -> hybrid retrieval trace -> persistent ledger -> redaction-safe receipts.
 
-1. Retrieve data.
-2. Validate and filter.
-3. Explain from supplied evidence.
-4. Persist an integrity-checkable record.
+## Slide 4 — Zetaris evidence
 
-Clearly label fixture mode and live mode.
+- Official bundle 2.4.3.
+- 9/9 verifier checks.
+- `SELECT 7` returned one row.
+- Four declared synthetic scenario rows returned live.
+- No production-feed or latency-performance claim.
 
-## Slide 4 — Technical stack
+## Slide 5 — Meterless evidence
 
-- Python standard library.
-- Zetaris REST adapter — live receipt `PENDING`.
-- Meterless engine — integration `PENDING`.
-- External model adapter — optional, no live provider output claimed.
-- SHA-256 integrity digest — verified locally.
+- Official H-MEM reference, upstream commit disclosed.
+- Two memories stored and retrieved.
+- Four append-only ledger events persisted.
+- Official conformance suite: 13/13.
 
-## Slide 5 — Sponsor technology
+## Slide 6 — VELQIRIS result
 
-Show only actual, recorded integration points. The project-local governor is not Meterless and must not be presented as such.
+- Consensus VWAP: 67,450.6642.
+- Verified spread: 0.09 bps.
+- Included: BINANCE, COINBASE, OKX.
+- Rejected: ANOMALY_DEX by MAD ceiling.
 
-## Slide 6 — What is new during the build window
+## Slide 7 — Release evidence
 
-- pre-existing base prototype: disclose explicitly;
-- 25 October fail-closed hardening: include only after it is adopted with commit provenance;
-- real sponsor integration: `PENDING`.
-
-## Slide 7 — Evidence
-
-- 21/21 local tests;
-- Meterless H-MEM canonical records, hierarchical layers, hybrid retrieval trace and hash-chained trust ledger;
-- redacted live Zetaris receipt `PENDING`;
-- Meterless trace `PENDING`;
-- live Nemotron receipt `PENDING`;
-- final demo and repository URLs `PENDING`.
-
-## Slide 8 — Limitations and next work
-
-- offline fixtures are not live-market evidence;
-- provider cost is not verified;
-- no digital signature exists;
-- latency is not yet benchmarked;
-- broader input validation and live failure testing remain.
+- Python tests: 24/24.
+- Public event-specific repository.
+- MP4 demo and PPTX deck included.
+- SHA-256 means integrity digest, not digital signature.
+- Full pre-existing-code disclosure.
