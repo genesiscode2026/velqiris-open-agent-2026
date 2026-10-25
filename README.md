@@ -7,15 +7,16 @@ VELQIRIS executes a declared market-integrity scenario in Zetaris, applies Media
 ## Verified release status
 
 - **Zetaris live:** the official local Docker bundle 2.4.3 passed its own verifier **9/9**. The verified route is `UI -> API -> driver -> Spark`.
-- **Live SQL proof:** `SELECT 7 AS seven` returned one row; a four-row market scenario also executed live in Zetaris and returned four rows. The scenario rows are declared synthetic. No production exchange-feed claim is made.
+- **Live SQL proof:** `SELECT 7 AS seven` returned one row. A second live query joined the declared logical relations `market_ticks` and `venue_telemetry` on `venue`, returning all four expected rows. Both relations are synthetic SQL inputs; no independently onboarded source or production exchange-feed claim is made.
 - **Meterless live:** the vendored official H-MEM reference at upstream commit `1742dec56a66e58eef9dda2d2b865823758ca8cd` stored and retrieved both evidence memories, writing four append-only ledger events to local persistent storage.
 - **Meterless conformance:** the official H-MEM conformance suite passed **13/13**.
-- **Project tests:** **24/24** Python tests pass.
+- **Project tests:** **30/30** Python tests pass.
+- **Audit Viewer:** [`artifacts/index.html`](artifacts/index.html) is a standalone HTML5 dashboard with an embedded evidence snapshot and same-origin refresh from the public receipts.
 - **Public repository:** <https://github.com/genesiscode2026/velqiris-open-agent-2026>
 - **Integrity terminology:** SHA-256 values are integrity digests, not digital signatures.
 - **Model boundary:** no external model was invoked in the live integration receipt. NVIDIA Nemotron is an optional in-kind prize integration and is not claimed here.
 
-The live receipt measures client-side durations of approximately 5.6 seconds for the connectivity query and 7.4 seconds for the four-row scenario on this first local Apple Silicon run. These are evidence timestamps, not a performance benchmark or a latency claim.
+The live receipt measures client-side durations of **1.679 seconds** for the connectivity query and **8.395 seconds** for the joined four-row scenario in one local run. These are single-run observations, not benchmarks or latency guarantees.
 
 ## Verified workflow
 
@@ -48,7 +49,7 @@ HMEM_IMPL="$PWD/vendor/meterless-hmem-reference/src/index.ts" \
   vendor/meterless-hmem-conformance/runner.ts
 ```
 
-Expected results: Python **24/24**, Meterless H-MEM **13/13**.
+Expected results: Python **30/30**, Meterless H-MEM **13/13**.
 
 Reproducing the live Zetaris receipt additionally requires the official event bundle, Docker Desktop, the registry entitlement, and a local `.env` supplied by Zetaris:
 
@@ -69,7 +70,7 @@ vendor/meterless-hmem-reference/node_modules/.bin/tsx \
 
 | Sponsor | Integration | Verified evidence |
 |---|---|---|
-| Zetaris | Official local bundle; session login; Lightning SQL through UI, API, driver and Spark; fresh request IDs | 9/9 verifier plus two successful live queries |
+| Zetaris | Official local bundle; session login; Lightning SQL through UI, API, driver and Spark; fresh request IDs; live two-relation JOIN | 9/9 verifier plus two successful live queries |
 | Meterless | Official H-MEM reference engine, local persistence, hybrid retrieval and append-only trust ledger | 13/13 conformance plus runtime receipt and ledger |
 
 The project-local `MeterlessGovernor` is only local prompt and cost arithmetic. It is not provider billing telemetry and is not used as proof of Meterless integration.
@@ -91,15 +92,15 @@ If neither credential mode is configured, live execution fails closed and return
 ├── vendor/
 │   ├── meterless-hmem-reference/  Official Apache-2.0 reference engine
 │   └── meterless-hmem-conformance/ Official conformance harness and vectors
-├── tests/                          24 deterministic regression tests
+├── tests/                          30 deterministic regression tests
 ├── evidence/                       Live and offline redaction-safe receipts
-├── artifacts/                      Final MP4 and PPTX
+├── artifacts/                      Audit Viewer, final MP4 and PPTX
 └── PREEXISTING_TECHNOLOGY.md       Build-window disclosure
 ```
 
 ## Pre-existing technology disclosure
 
-The VELQIRIS brand, initial Python adapters, fixture workflow, MAD logic, project-local governor and original tests predate the official 22 October 2026 build-window start. The fail-closed hardening, local-session Zetaris adapter, live Zetaris execution, official Meterless H-MEM bridge, conformance evidence, receipts, expanded 24-test suite, documentation and release artifacts were completed during the current build window. See [`PREEXISTING_TECHNOLOGY.md`](PREEXISTING_TECHNOLOGY.md).
+The VELQIRIS brand, initial Python adapters, fixture workflow, MAD logic, project-local governor and original tests predate the official 22 October 2026 build-window start. The fail-closed hardening, local-session Zetaris adapter, live Zetaris execution, official Meterless H-MEM bridge, conformance evidence, receipts, expanded 30-test suite, standalone Audit Viewer, documentation and release artifacts were completed during the current build window. See [`PREEXISTING_TECHNOLOGY.md`](PREEXISTING_TECHNOLOGY.md).
 
 ## License
 

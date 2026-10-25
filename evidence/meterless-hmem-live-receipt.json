@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "run_id": "velqiris-live-57de9d1a-c97a-4693-86ca-b4e67379115d",
+  "run_id": "velqiris-live-6b5cfe79-49b9-4d97-a455-e178327d4a6f",
   "engine": "Meterless H-MEM official reference",
   "engine_package": "@meterless/hmem-reference",
   "engine_version": "0.1.0",
@@ -19,10 +19,10 @@
   "retrieval_reason": "hybrid ranking for \"Zetaris market consensus MAD outlier risk regime\" (domain: general)",
   "retrieval_scores": {
     "mem-2": 0.4704,
-    "mem-1": 0.2968
+    "mem-1": 0.3108
   },
   "trust_ledger_entries": 4,
-  "trust_ledger_sha256": "588971f2a06fb9efb260aff9514d2f05014e8e8f9bad0946a6fb025fe4c8791d",
+  "trust_ledger_sha256": "0e30a89c169866402e8a80d909bf60a09d1d18454115d865267677b3d14d3702",
   "persisted_files": [
     "state.json",
     "ledger.jsonl"

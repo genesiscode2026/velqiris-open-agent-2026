@@ -21,12 +21,12 @@
 - Official Meterless H-MEM reference bridge with upstream provenance and Apache-2.0 license.
 - Meterless official conformance result, 13/13.
 - Persistent H-MEM state, retrieval trace, and append-only ledger evidence.
-- Expanded regression suite, now 24/24.
+- Expanded regression suite, now 30/30.
 - Public event-specific repository, final deck, current demo, and release documentation.
 
 ## Sponsor disclosure
 
-- **Zetaris:** verified live against the official event bundle. The submitted market scenario uses declared synthetic SQL rows, not production feeds.
+- **Zetaris:** verified live against the official event bundle. The submitted scenario joins two declared synthetic logical relations; it does not claim independently onboarded external sources or production feeds.
 - **Meterless:** verified through the official H-MEM reference engine. The older project-local governor is not presented as Meterless billing telemetry.
 - **NVIDIA Nemotron:** optional prize technology; no live model output is claimed.
 

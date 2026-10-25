@@ -17,8 +17,8 @@ Zetaris live SQL -> MAD consensus -> official Meterless H-MEM -> hybrid retrieva
 - Official bundle 2.4.3.
 - 9/9 verifier checks.
 - `SELECT 7` returned one row.
-- Four declared synthetic scenario rows returned live.
-- No production-feed or latency-performance claim.
+- `market_ticks` joined with `venue_telemetry`; four declared synthetic scenario rows returned live.
+- No independent-source federation, production-feed, or latency-performance claim.
 
 ## Slide 5 — Meterless evidence
 
@@ -36,7 +36,8 @@ Zetaris live SQL -> MAD consensus -> official Meterless H-MEM -> hybrid retrieva
 
 ## Slide 7 — Release evidence
 
-- Python tests: 24/24.
+- Python tests: 30/30.
+- Standalone Audit Viewer: `artifacts/index.html`.
 - Public event-specific repository.
 - MP4 demo and PPTX deck included.
 - SHA-256 means integrity digest, not digital signature.
